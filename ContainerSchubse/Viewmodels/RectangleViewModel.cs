@@ -9,18 +9,33 @@ namespace ContainerSchubse
 {
     public abstract class RectangleViewModel : BaseViewModel
     {
-        protected const double pixelsPerMeter = 1;
-
-        protected double canvasWidth = 468;
+        protected const double pixelsPerMeter = 20;
+        protected double canvasWidth = 568;
         protected double canvasHeight = 297;
 
+        /// <summary>
+        /// Interne Berechnungsvariable um den Container an der richtigen Stelle im Canvas anzuzeigen.
+        /// </summary>
         public double CenterOffsetX { get; }
+        /// <summary>
+        /// Interne Berechnungsvariable um den Container an der richtigen Stelle im Canvas anzuzeigen.
+        /// </summary>
         public double CenterOffsetY { get; }
-        public double RectangleWidth { get; } = 480;
-        public double RectangleHeight { get; } = 94;
+
+        /// <summary>
+        /// Breite des Rechtecks (Container) in Pixeln.
+        /// </summary>
+        public double RectangleWidth => Container.Width / pixelsPerMeter;
+        /// <summary>
+        /// Höhre (=Länge) des Rechtecks (Container) in Pixeln.
+        /// </summary>
+        public double RectangleHeight => Container.Length / pixelsPerMeter;
         public double CircleRadius { get; } = 10;
 
         private double measuredOffsetX;
+        /// <summary>
+        /// Aus den Messdaten bestimmter X-Offset in Millimetern.
+        /// </summary>
         public double MeasuredOffsetX
         {
             get { return measuredOffsetX; }
@@ -28,30 +43,54 @@ namespace ContainerSchubse
         }
 
         private double measuredOffsetY;
+        /// <summary>
+        /// Aus den Messdaten bestimmter Y-Offset in Millimetern.
+        /// </summary>
         public double MeasuredOffsetY
         {
             get { return measuredOffsetY; }
             set { measuredOffsetY = value; OnPropertyChanged(); OnPropertyChanged(nameof(TotalOffsetY)); }
         }
 
+        /// <summary>
+        /// Notwendige Verschiebung, damit das Rechteck nicht in der Mitte des Canvas sondern in der Ecke gezeichnet wird.
+        /// </summary>
         public abstract double CanvasOffsetX { get; }
+        /// <summary>
+        /// Notwendige Verschiebung, damit das Rechteck nicht in der Mitte des Canvas sondern in der Ecke gezeichnet wird.
+        /// </summary>
         public abstract double CanvasOffsetY { get; }
 
         public abstract double CircleX { get; }
         public abstract double CircleY { get; }
 
+        /// <summary>
+        /// Berechnete Größe um das Rechteck passend im Canvas zu verschieben.
+        /// Hierfür wird der `CanvasOffset` mit dem `MeasuredOffset` zusammengerechnet.
+        /// </summary>
         public double TotalOffsetX
         {
-            get { return CanvasOffsetX + MeasuredOffsetX; }
+            get { return CanvasOffsetX + MeasuredOffsetX / 1000.0 * pixelsPerMeter; }
         }
 
+        /// <summary>
+        /// Berechnete Größe um das Rechteck passend im Canvas zu verschieben.
+        /// Hierfür wird der `CanvasOffset` mit dem `MeasuredOffset` zusammengerechnet.
+        /// </summary>
         public double TotalOffsetY
         {
             get { return CanvasOffsetY + MeasuredOffsetY; }
         }
 
-            
+        /// <summary>
+        /// Container, dessen Maße verwendet werden sollen.
+        /// </summary>
+        public readonly Container Container;
+
         private double rotation = 0;
+        /// <summary>
+        /// Aktuelle Rotation des Containers.
+        /// </summary>
         public double Rotation
         {
             get => this.rotation;
@@ -64,9 +103,10 @@ namespace ContainerSchubse
 
         public Quadrants Quadrant { get; }
 
-        public RectangleViewModel(Quadrants quadrant)
+        public RectangleViewModel(Quadrants quadrant, Container container)
         {
             this.Quadrant = quadrant;
+            this.Container = container;
         }
 
         protected double InMeter(double pixels) => pixels / pixelsPerMeter;
@@ -82,7 +122,7 @@ namespace ContainerSchubse
         public override double CircleY => CanvasOffsetY - (CircleRadius / 2);
 
 
-        public UpperLeftRectangleViewModel() : base(Quadrants.UpperLeft)
+        public UpperLeftRectangleViewModel() : base(Quadrants.UpperLeft, Container.Current)
         {
             //
         }
@@ -96,7 +136,7 @@ namespace ContainerSchubse
         public override double CircleX => CanvasOffsetX + (CircleRadius / 2);
         public override double CircleY => CanvasOffsetY - (CircleRadius / 2);
 
-        public UpperRightRectangleViewModel() : base(Quadrants.UpperRight)
+        public UpperRightRectangleViewModel() : base(Quadrants.UpperRight, Container.Current)
         {
             //
         }
@@ -110,7 +150,7 @@ namespace ContainerSchubse
         public override double CircleX => CanvasOffsetX - (CircleRadius / 2);
         public override double CircleY => CanvasOffsetY + (CircleRadius / 2);
 
-        public LowerLeftRectangleViewModel() : base(Quadrants.LowerLeft)
+        public LowerLeftRectangleViewModel() : base(Quadrants.LowerLeft, Container.Current)
         {
             //
         }
@@ -124,7 +164,7 @@ namespace ContainerSchubse
         public override double CircleX => CanvasOffsetX - (CircleRadius / 2);
         public override double CircleY => CanvasOffsetY + (CircleRadius / 2);
 
-        public LowerRightRectangleViewModel() : base(Quadrants.LowerRight)
+        public LowerRightRectangleViewModel() : base(Quadrants.LowerRight, Container.Current)
         {
             //
         }

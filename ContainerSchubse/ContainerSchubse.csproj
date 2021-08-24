@@ -76,6 +76,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Models\Container.cs" />
     <Compile Include="Viewmodels\BaseViewModel.cs" />
     <Compile Include="Viewmodels\RectangleViewModel.cs" />
     <Compile Include="Viewmodels\MainViewModel.cs" />

@@ -14,25 +14,17 @@
         >
         <Rectangle 
             Stroke="Black" 
-            Width="480" 
-            Height="94" 
-            RenderTransformOrigin="0.5, 0.5" Canvas.Left="{Binding TotalOffsetX}" Canvas.Top="{Binding TotalOffsetY}"
+            Width="{Binding RectangleWidth}" 
+            Height="{Binding RectangleHeight}" 
+            RenderTransformOrigin="0.5, 0.5" 
+            Canvas.Left="{Binding TotalOffsetX}" 
+            Canvas.Top="{Binding TotalOffsetY}"
             >
-            <!--
-            Canvas.Left="{Binding RelativeSource={RelativeSource AncestorType={x:Type Canvas}}, Path=ActualWidth}"
-            Canvas.Top="{Binding RelativeSource={RelativeSource AncestorType={x:Type Canvas}}, Path=ActualHeight}"
-            -->
             <Rectangle.RenderTransform>
                 <TransformGroup>
                     <RotateTransform 
                         Angle="{Binding Rotation}"
                         />
-                    <!--
-                    <TranslateTransform
-                        X="234"
-                        Y="196"
-                        />
-                    -->
                 </TransformGroup>
             </Rectangle.RenderTransform>
         </Rectangle>

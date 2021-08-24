@@ -5,8 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ContainerSchubse"
         mc:Ignorable="d"
-        ResizeMode="NoResize"
-        Title="MainWindow" Height="650" Width="1200">
+        Title="MainWindow" Height="630" Width="1200">
     <Window.Resources>
         <local:DoubleConverter x:Key="doubleConverter"/>
         <local:SliderValueConverter x:Key="sliderConverter" Factor="0.1"/>
@@ -15,31 +14,20 @@
         <local:MainViewModel />
     </Window.DataContext>
     <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="250" />
+            <ColumnDefinition Width="300" />
             <ColumnDefinition Width="5" />
         </Grid.ColumnDefinitions>
-        <Menu Grid.Row="0" Grid.ColumnSpan="2">
-            <MenuItem Header="Datei">
-                <MenuItem Header="Öffnen" Command=""/>
-                <Separator/>
-                <MenuItem Header="Beenden" Command=""/>
-            </MenuItem>
-        </Menu>
         <!-- Anzeige der Containerelemente -->
-        <Grid Grid.Row="1" Grid.Column="0">
+        <Grid Grid.Row="0" Grid.Column="0">
             <Grid.RowDefinitions>
                 <RowDefinition Height="297"/>
                 <RowDefinition Height="297"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="468"/>
-                <ColumnDefinition Width="468"/>
+                <ColumnDefinition Width="568"/>
+                <ColumnDefinition Width="568"/>
             </Grid.ColumnDefinitions>
             <local:RectangleRenderer Grid.Row="0" Grid.Column="0" Background="#aaaaaa" DataContext="{Binding UpperLeftModel}"/>
             <local:RectangleRenderer Grid.Row="0" Grid.Column="1" Background="#bbbbbb" DataContext="{Binding UpperRightModel}"/>
@@ -48,14 +36,17 @@
         </Grid>
 
         <!-- Parametrierung -->
-        <StackPanel
+        <ScrollViewer
             Grid.Row="1" 
             Grid.Column="1"
             >
-            <local:RectangleParameterPanel DataContext="{Binding UpperLeftModel}" />
-            <local:RectangleParameterPanel DataContext="{Binding UpperRightModel}" />
-            <local:RectangleParameterPanel DataContext="{Binding LowerLeftModel}" />
-            <local:RectangleParameterPanel DataContext="{Binding LowerRightModel}" />
-        </StackPanel>
+            <StackPanel
+                >
+                <local:RectangleParameterPanel DataContext="{Binding UpperLeftModel}" />
+                <local:RectangleParameterPanel DataContext="{Binding UpperRightModel}" />
+                <local:RectangleParameterPanel DataContext="{Binding LowerLeftModel}" />
+                <local:RectangleParameterPanel DataContext="{Binding LowerRightModel}" />
+            </StackPanel>
+        </ScrollViewer>
     </Grid>
 </Window>
