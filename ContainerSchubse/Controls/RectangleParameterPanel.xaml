@@ -1,0 +1,76 @@
+﻿<UserControl x:Class="ContainerSchubse.RectangleParameterPanel"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:ContainerSchubse" xmlns:numeric="http://gu.se/NumericInput"
+             d:DataContext="{d:DesignInstance Type=local:RectangleViewModel, IsDesignTimeCreatable=True}"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <local:DoubleConverter x:Key="doubleConverter"/>
+        <local:SliderValueConverter x:Key="sliderConverter" Factor="0.1"/>
+    </UserControl.Resources>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Label Grid.Row="0" Grid.Column="0" Content="{Binding Quadrant}" FontSize="22"/>
+
+        <Label Grid.Row="1" Grid.Column="0" Content="Winkel"/>
+        <numeric:SpinnerDecorator
+            Grid.Row="1" 
+            Grid.Column="1" 
+            >
+            <numeric:DoubleBox 
+                        AllowSpinners="True"
+                        Increment="0.1"
+                        Value="{Binding Rotation, UpdateSourceTrigger=PropertyChanged}"
+                        />
+        </numeric:SpinnerDecorator>
+        <Slider
+                    Grid.Row="2"
+                    Grid.Column="1"
+                    Minimum="-1800"
+                    Maximum="1800"
+                    Interval="1"
+                    Value="{Binding Rotation, Converter={StaticResource sliderConverter}}"
+                    />
+        <Label Grid.Row="3" Grid.Column="0" Content="Messoffset (x)"/>
+        <numeric:SpinnerDecorator
+            Grid.Row="3" 
+            Grid.Column="1" 
+            >
+            <numeric:DoubleBox 
+                        AllowSpinners="True"
+                        Increment="0.1"
+                        Value="{Binding MeasuredOffsetX, UpdateSourceTrigger=PropertyChanged}"
+                        />
+        </numeric:SpinnerDecorator>
+        <Label Grid.Row="4" Grid.Column="0" Content="Messoffset (y)"/>
+        <numeric:SpinnerDecorator
+            Grid.Row="4" 
+            Grid.Column="1" 
+            >
+            <numeric:DoubleBox 
+                        AllowSpinners="True"
+                        Increment="0.1"
+                        Value="{Binding MeasuredOffsetY, UpdateSourceTrigger=PropertyChanged}"
+                        />
+        </numeric:SpinnerDecorator>
+    </Grid>
+</UserControl>
