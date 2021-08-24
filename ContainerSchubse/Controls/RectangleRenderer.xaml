@@ -7,32 +7,38 @@
              d:DataContext="{d:DesignInstance Type=local:RectangleViewModel, IsDesignTimeCreatable=True}"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <Canvas 
-        Grid.Row="0"
-        Grid.Column="0"
-        ClipToBounds="True"
-        >
-        <Rectangle 
-            Stroke="Black" 
-            Width="{Binding RectangleWidth}" 
-            Height="{Binding RectangleHeight}" 
-            RenderTransformOrigin="0.5, 0.5" 
-            Canvas.Left="{Binding TotalOffsetX}" 
-            Canvas.Top="{Binding TotalOffsetY}"
+    <Border
+        BorderBrush="Black"
+        BorderThickness="1">
+        <Canvas 
+            ClipToBounds="True"
             >
-            <Rectangle.RenderTransform>
-                <TransformGroup>
-                    <RotateTransform 
-                        Angle="{Binding Rotation}"
-                        />
-                </TransformGroup>
-            </Rectangle.RenderTransform>
-        </Rectangle>
-        <Ellipse
-            Stroke="DarkGreen"
-            Width="{Binding CircleRadius}"
-            Height="{Binding CircleRadius}"
-            RenderTransformOrigin="0.5, 0.5" Canvas.Left="{Binding CircleX}" Canvas.Top="{Binding CircleY}"
-            />
-    </Canvas>
+            <Grid x:Name="chessGrid">
+                <!-- Wird dynamisch befüllt. -->
+            </Grid>
+                
+            <Rectangle 
+                Stroke="Black" 
+                Width="{Binding RectangleWidth}" 
+                Height="{Binding RectangleHeight}" 
+                RenderTransformOrigin="0.5, 0.5" 
+                Canvas.Left="{Binding TotalOffsetX}" 
+                Canvas.Top="{Binding TotalOffsetY}"
+                >
+                <Rectangle.RenderTransform>
+                    <TransformGroup>
+                        <RotateTransform 
+                            Angle="{Binding Rotation}"
+                            />
+                    </TransformGroup>
+                </Rectangle.RenderTransform>
+            </Rectangle>
+            <Ellipse
+                Stroke="DarkGreen"
+                Width="{Binding CircleRadius}"
+                Height="{Binding CircleRadius}"
+                RenderTransformOrigin="0.5, 0.5" Canvas.Left="{Binding CircleX}" Canvas.Top="{Binding CircleY}"
+                />
+        </Canvas>
+    </Border>
 </UserControl>

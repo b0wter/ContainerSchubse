@@ -9,9 +9,6 @@ namespace ContainerSchubse
 {
     public abstract class RectangleViewModel : BaseViewModel
     {
-        protected const double pixelsPerMeter = 20;
-        protected double canvasWidth = 568;
-        protected double canvasHeight = 297;
 
         /// <summary>
         /// Interne Berechnungsvariable um den Container an der richtigen Stelle im Canvas anzuzeigen.
@@ -25,11 +22,11 @@ namespace ContainerSchubse
         /// <summary>
         /// Breite des Rechtecks (Container) in Pixeln.
         /// </summary>
-        public double RectangleWidth => Container.Width / pixelsPerMeter;
+        public double RectangleWidth => (Container.Width / 1000) * Constants.PixelsPerMeter;
         /// <summary>
         /// Höhre (=Länge) des Rechtecks (Container) in Pixeln.
         /// </summary>
-        public double RectangleHeight => Container.Length / pixelsPerMeter;
+        public double RectangleHeight => (Container.Length / 1000) * Constants.PixelsPerMeter;
         public double CircleRadius { get; } = 10;
 
         private double measuredOffsetX;
@@ -70,7 +67,7 @@ namespace ContainerSchubse
         /// </summary>
         public double TotalOffsetX
         {
-            get { return CanvasOffsetX + MeasuredOffsetX / 1000.0 * pixelsPerMeter; }
+            get { return CanvasOffsetX + MeasuredOffsetX / 1000.0 * Constants.PixelsPerMeter; }
         }
 
         /// <summary>
@@ -109,14 +106,14 @@ namespace ContainerSchubse
             this.Container = container;
         }
 
-        protected double InMeter(double pixels) => pixels / pixelsPerMeter;
-        protected double InPixels(double meters) => meters * pixelsPerMeter;
+        protected double InMeter(double pixels) => pixels / Constants.PixelsPerMeter;
+        protected double InPixels(double meters) => meters * Constants.PixelsPerMeter;
     }
 
     public class UpperLeftRectangleViewModel : RectangleViewModel
     {
-        public override double CanvasOffsetX => canvasWidth - (RectangleWidth / 2);
-        public override double CanvasOffsetY => canvasHeight - (RectangleHeight / 2);
+        public override double CanvasOffsetX => Constants.CanvasWidth - (RectangleWidth / 2);
+        public override double CanvasOffsetY => Constants.CanvasHeight - (RectangleHeight / 2);
 
         public override double CircleX => CanvasOffsetX - (CircleRadius / 2);
         public override double CircleY => CanvasOffsetY - (CircleRadius / 2);
@@ -131,7 +128,7 @@ namespace ContainerSchubse
     public class UpperRightRectangleViewModel : RectangleViewModel
     {
         public override double CanvasOffsetX => RectangleWidth / -2;
-        public override double CanvasOffsetY => canvasHeight - (RectangleHeight / 2);
+        public override double CanvasOffsetY => Constants.CanvasHeight - (RectangleHeight / 2);
 
         public override double CircleX => CanvasOffsetX + (CircleRadius / 2);
         public override double CircleY => CanvasOffsetY - (CircleRadius / 2);
@@ -144,7 +141,7 @@ namespace ContainerSchubse
 
     public class LowerLeftRectangleViewModel : RectangleViewModel
     {
-        public override double CanvasOffsetX => canvasWidth - (RectangleWidth / 2);
+        public override double CanvasOffsetX => Constants.CanvasWidth - (RectangleWidth / 2);
         public override double CanvasOffsetY => RectangleHeight / -2;
 
         public override double CircleX => CanvasOffsetX - (CircleRadius / 2);

@@ -15,10 +15,11 @@
     </Window.DataContext>
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="300" />
-            <ColumnDefinition Width="5" />
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="300"/>
+            <ColumnDefinition Width="5"/>
         </Grid.ColumnDefinitions>
+
         <!-- Anzeige der Containerelemente -->
         <Grid Grid.Row="0" Grid.Column="0">
             <Grid.RowDefinitions>
