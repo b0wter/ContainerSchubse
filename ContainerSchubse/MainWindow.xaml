@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ContainerSchubse"
         mc:Ignorable="d"
-        Title="MainWindow" Height="630" Width="1200">
+        Title="MainWindow" Height="630" Width="1460">
     <Window.Resources>
         <local:DoubleConverter x:Key="doubleConverter"/>
         <local:SliderValueConverter x:Key="sliderConverter" Factor="0.1"/>
