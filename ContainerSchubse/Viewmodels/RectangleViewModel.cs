@@ -90,7 +90,10 @@ namespace ContainerSchubse
         /// </summary>
         public double Rotation
         {
-            get => this.rotation;
+            get
+            {
+                return this.rotation;
+            }
             set
             {
                 this.rotation = value;
