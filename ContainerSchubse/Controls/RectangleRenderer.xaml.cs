@@ -20,39 +20,61 @@ namespace ContainerSchubse
     /// </summary>
     public partial class RectangleRenderer : UserControl
     {
-        private Random random = new Random();
+        private static readonly byte EvenColorByte = 240;
+        private static readonly Color EvenColor = Color.FromRgb(EvenColorByte, EvenColorByte, EvenColorByte);
+        private static readonly byte OddColorByte = 220;
+        private static readonly Color OddColor = Color.FromRgb(OddColorByte, OddColorByte, OddColorByte);
+        
+        public static readonly DependencyProperty AddOffsetAtTopProperty = DependencyProperty.Register(
+            nameof(AddOffsetAtTop), typeof(bool), typeof(RectangleRenderer));
+        public bool AddOffsetAtTop
+        {
+            get { return (bool)GetValue(AddOffsetAtTopProperty); }
+            set { SetValue(AddOffsetAtTopProperty, value); }
+        }
 
         public RectangleRenderer()
         {
             InitializeComponent();
+            // Dieser Hack ist notwendig, weil die Eigenschaften aus dem XAML erst gesetzt werden
+            // nachdem die Klasse instantiiert wird.
+            // Normalerweise umgeht man das Problem mit INotifyPropertyChanged, aber hier soll ja nur
+            // einmalig etwas angepasst werden.
+            LayoutUpdated += RectangleRenderer_LayoutUpdated;
+        }
+
+        private void RectangleRenderer_LayoutUpdated(object sender, EventArgs e)
+        {
+            LayoutUpdated -= RectangleRenderer_LayoutUpdated;
             AddChessPattern();
         }
 
         private void AddChessPattern()
         {
-            var grid = (Grid)this.FindName("chessGrid");
-
             var columnCount = Math.Ceiling(Constants.CanvasWidth / Constants.PixelsPerMeter);
             for (int i = 0; i < columnCount; i++)
-                grid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(Constants.PixelsPerMeter) });
+                ChessGrid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(Constants.PixelsPerMeter) });
 
             var rowCount = Math.Ceiling(Constants.CanvasHeight / Constants.PixelsPerMeter);
+            var gridYOffset = Math.Abs(Constants.CanvasHeight - ((rowCount - 1) * Constants.PixelsPerMeter));
+            if(AddOffsetAtTop)
+                ChessGrid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(gridYOffset) });
             for (int i = 0; i < rowCount; i++)
-                grid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(Constants.PixelsPerMeter) });
+                ChessGrid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(Constants.PixelsPerMeter) });
 
             for (int i = 0; i < columnCount; i++)
                 for (int j = 0; j < rowCount; j++)
-                    grid.Children.Add(CreateBorder(j, i));
+                    ChessGrid.Children.Add(CreateBorder(j, i));
         }
+
 
         private Border CreateBorder(int row, int col)
         {
             var border = new Border();
+            var color = (row + col) % 2 == 0 ? EvenColor : OddColor;
             border.SetValue(Grid.RowProperty, row);
             border.SetValue(Grid.ColumnProperty, col);
-            var color = (byte)random.Next(160, 255);
-            border.Background = new SolidColorBrush(Color.FromRgb(color, color, color));
-            //border.Background = new SolidColorBrush(Color.FromRgb((byte)random.Next(0, 255), (byte)random.Next(0, 255), (byte)random.Next(0, 255)));
+            border.Background = new SolidColorBrush(color);
             return border;
         }
     }

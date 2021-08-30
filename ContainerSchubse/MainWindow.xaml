@@ -23,17 +23,41 @@
         <!-- Anzeige der Containerelemente -->
         <Grid Grid.Row="0" Grid.Column="0">
             <Grid.RowDefinitions>
-                <RowDefinition Height="297"/>
-                <RowDefinition Height="297"/>
+                <RowDefinition Height="{Binding Source={x:Static local:Constants.CanvasHeight}}"/>
+                <RowDefinition Height="{Binding Source={x:Static local:Constants.CanvasHeight}}"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="568"/>
-                <ColumnDefinition Width="568"/>
+                <ColumnDefinition Width="{Binding Source={x:Static local:Constants.CanvasWidth}}"/>
+                <ColumnDefinition Width="{Binding Source={x:Static local:Constants.CanvasWidth}}"/>
             </Grid.ColumnDefinitions>
-            <local:RectangleRenderer Grid.Row="0" Grid.Column="0" Background="#aaaaaa" DataContext="{Binding UpperLeftModel}"/>
-            <local:RectangleRenderer Grid.Row="0" Grid.Column="1" Background="#bbbbbb" DataContext="{Binding UpperRightModel}"/>
-            <local:RectangleRenderer Grid.Row="1" Grid.Column="0" Background="#cccccc" DataContext="{Binding LowerLeftModel}"/>
-            <local:RectangleRenderer Grid.Row="1" Grid.Column="1" Background="#dddddd" DataContext="{Binding LowerRightModel}"/>
+            <local:RectangleRenderer 
+                Grid.Row="0" 
+                Grid.Column="0" 
+                Background="#aaaaaa" 
+                DataContext="{Binding UpperLeftModel}"
+                AddOffsetAtTop="True"
+                />
+            <local:RectangleRenderer 
+                Grid.Row="0" 
+                Grid.Column="1" 
+                Background="#bbbbbb" 
+                DataContext="{Binding UpperRightModel}"
+                AddOffsetAtTop="True"
+                />
+            <local:RectangleRenderer 
+                Grid.Row="1" 
+                Grid.Column="0" 
+                Background="#cccccc" 
+                DataContext="{Binding LowerLeftModel}"
+                AddOffsetAtTop="False"
+                />
+            <local:RectangleRenderer 
+                Grid.Row="1" 
+                Grid.Column="1" 
+                Background="#dddddd" 
+                DataContext="{Binding LowerRightModel}"
+                AddOffsetAtTop="False"
+                />
         </Grid>
 
         <!-- Parametrierung -->

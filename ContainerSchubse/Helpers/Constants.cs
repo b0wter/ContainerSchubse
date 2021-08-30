@@ -9,7 +9,7 @@ namespace ContainerSchubse
     public static class Constants
     {
         public static int CanvasWidth => 568;
-        public static int CanvasHeight => 297;
+        public static int CanvasHeight => 297;// - 34;
         public static double PixelsPerMeter = 47.333333333333333333333333333333333;
     }
 }
